@@ -1,0 +1,25 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+body {
+    font-family: 'Helvetica Neue',Helvetica,Arial,sans-serif;
+    @apply text-gray-700;
+}
+.no-color {
+    background-image: url('/img/no.svg');
+    background-size: 24px;
+    background-position: center;
+    background-repeat: no-repeat;
+}
+.sans {
+    font-family: 'Montserrat', 'Helvetica Neue', Helvetica, Arial, sans-serif;
+}
+.serif {
+    font-family: 'Trirong', Georgia, Times, 'Times New Roman', Courier, serif;
+}
+svg {
+    display: inline-block;
+}
+
+[x-cloak] { display: none !important; }

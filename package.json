@@ -1,0 +1,27 @@
+{
+  "name": "contrast2",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "watch": "webpack --config webpack.config.js -w --mode development",
+    "build": "webpack --config webpack.config.js --mode production"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "autoprefixer": "^10.3.6",
+    "css-loader": "^6.3.0",
+    "mini-css-extract-plugin": "^2.3.0",
+    "postcss": "^8.3.8",
+    "postcss-loader": "^6.1.1",
+    "tailwindcss": "^2.2.16",
+    "webpack": "^5.56.0",
+    "webpack-cli": "^4.8.0"
+  },
+  "dependencies": {
+    "alpinejs": "^3.4.2",
+    "chroma-js": "^2.1.2"
+  }
+}
