@@ -1,5 +1,3 @@
-// import chroma from "chroma-js";
-
 export const initUI = () => {
     
     function parseFloatNotNaN(val) {
@@ -12,6 +10,12 @@ export const initUI = () => {
         Alpine.data('contrast', () => ({
             contrast: null,
             absContrast: null,
+            view: 'text',
+            targetContrast: null,
+            targetContrastNotFound: {
+                text: false,
+                bg: false
+            },
             inputs: {
                 text: {
                     val: '',
@@ -92,8 +96,8 @@ export const initUI = () => {
                 },
                 hsl: {
                     expand: {
-                        text: false,
-                        bg: false
+                        text: true,
+                        bg: true
                     },
                     h: {
                         max: 360.0,
@@ -203,10 +207,12 @@ export const initUI = () => {
                 },
             },
             init() {
-                this.setColor('text','hex',null,'purple');
-                this.setColor('bg','hex',null,'blue');
+                this.setColor('text', 'hex', null,'#FEF3C7');
+                this.setColor('bg', 'hex', null,'#059669');
             },
             setColor(textOrBg, mode, chan, val, propagate = true, updateInput = true) {
+                this.targetContrastNotFound.text = false;
+                this.targetContrastNotFound.bg = false;
                 let color, valPerc;
                 if (mode === 'hsl' || mode === 'rgb' || mode === 'lch') {
                     let max = this.modes[mode][chan].max;
@@ -394,17 +400,31 @@ export const initUI = () => {
                 this.setColor(textOrBg, 'hex', null, chroma.hex('rgb'), true, false);
                 this.inputs[textOrBg].valid = true;
             },
-            onSliderMousedown(textOrBg, mode, chan, e) {
+            onSliderMousedown(textOrBg, mode, chan, e, isTouch = false) {
+                if (isTouch) e.preventDefault();
                 let sliderEl = this.$refs['slider-'+textOrBg+'-'+mode+'-'+chan];
-                this.onSliderMouseMove(textOrBg, mode, chan, sliderEl, e);
-                let callback = this.onSliderMouseMove.bind(this, textOrBg, mode, chan, sliderEl);
-                document.addEventListener('mousemove', callback, true);
-                document.addEventListener('mouseup', () => {
-                    document.removeEventListener('mousemove', callback, true);
-                });
+                this.onSliderMouseMove(textOrBg, mode, chan, sliderEl, isTouch, e);
+                let callback = this.onSliderMouseMove.bind(this, textOrBg, mode, chan, sliderEl, isTouch);
+                if (isTouch) {
+                    document.addEventListener('touchmove', callback, true);
+                    document.addEventListener('touchend', () => {
+                        document.removeEventListener('touchmove', callback, true);
+                    });
+                } else {
+                    document.addEventListener('mousemove', callback, true);
+                    document.addEventListener('mouseup', () => {
+                        document.removeEventListener('mousemove', callback, true);
+                    });
+                }
             },
-            onSliderMouseMove(textOrBg, mode, chan, sliderEl, e) {
-                let mouseX = e.pageX;
+            onSliderMouseMove(textOrBg, mode, chan, sliderEl, isTouch, e) {
+                if (isTouch) e.preventDefault();
+                let mouseX;
+                if (isTouch && e.touches) {
+                    mouseX = e.touches[0].pageX;
+                } else {
+                    mouseX = e.pageX;
+                }
                 let sliderRect = sliderEl.getBoundingClientRect();
                 let x = (mouseX - sliderRect.left) / (sliderRect.right - sliderRect.left);
                 let val = x * this.modes[mode][chan].max;
@@ -432,6 +452,8 @@ export const initUI = () => {
                 if (!this.modes.chroma.text || !this.modes.chroma.bg) {
                     return false;
                 }
+                this.targetContrastNotFound[textOrBg] = false;
+                this.targetContrast = targetContrast;
                 targetContrast = parseFloat(targetContrast);
                 let contrast = this.contrast;
                 // If contrast is initially higher than target, go in other direction
@@ -450,7 +472,7 @@ export const initUI = () => {
                 if (this.reachedTarget(results.contrast, targetContrast, initGT)) {
                     this.setColor(textOrBg, 'hsl', 'l', results.hsl[textOrBg].l);
                 } else {
-                    console.log('Could not find color');
+                    this.targetContrastNotFound[textOrBg] = true;
                 }
             },
             reachedTarget(contrast, targetContrast, initGT) {
@@ -485,10 +507,30 @@ export const initUI = () => {
                     contrast = getChromaContrast3(textChroma, bgChroma);
                     reachedTarget = this.reachedTarget(contrast, targetContrast, initGT);
                 }
+                if (reachedTarget && initGT) {
+                    hsl[textOrBg].l += (-1.0 * toAdd);
+                }
                 return {
                     hsl: hsl,
                     contrast: contrast
                 };
+            },
+            onCopyClick(text, refStr) {
+                copy(text);
+                let copiedEls = document.getElementsByClassName('copied');
+                for (let i=0, len=copiedEls.length; i<len; ++i) {
+                    copiedEls[i].style.display = 'none';
+                }
+                let copiedEl = this.$refs[refStr];
+                copiedEl.style.display = 'block';
+                setTimeout(() => {
+                    copiedEl.style.display = 'none';
+                }, 3000);
+            },
+            switchColors() {
+                var textHex = this.modes.hex.text;
+                this.setColor('text', 'hex', null, this.modes.hex.bg);
+                this.setColor('bg', 'hex', null, textHex);
             },
         }));
     });

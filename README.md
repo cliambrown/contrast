@@ -2,6 +2,8 @@
 
 A tool to pick colors using a variety of models, measure contrast using the draft WCAG 3 algorithm, and find new colors with good contrast. 
 
+Try it out: [https://cliambrown.com/contrast/](cliambrown.com/contrast)
+
 ## Features
 
 - RGB color picker
@@ -9,7 +11,7 @@ A tool to pick colors using a variety of models, measure contrast using the draf
 - LCH color picker
 - Copy-and-paste colors as hex codes, CSS names, RGB, HSl, etc.
 - Get contrast using draft WCAG 3 algorithm
-- Adjust colors to desired contrast value
+- Automatically adjust colors to desired contrast value
 
 ## Built with
 
@@ -18,6 +20,7 @@ A tool to pick colors using a variety of models, measure contrast using the draf
 - [Tailwind CSS](https://tailwindcss.com/ "Tailwind CSS")
 - [Ionicons](https://ionic.io/ionicons "Ionicons")
 - [Heroicons](https://heroicons.com/ "Heroicons")
+- [copy-text-to-clipboard](https://github.com/sindresorhus/copy-text-to-clipboard "copy-text-to-clipboard")
 
 ## Inspired by
 

@@ -3,7 +3,7 @@
 @tailwind utilities;
 
 body {
-    font-family: 'Helvetica Neue',Helvetica,Arial,sans-serif;
+    font-family: 'Inter','Helvetica Neue',Helvetica,Arial,sans-serif;
     @apply text-gray-700;
 }
 .no-color {
@@ -12,14 +12,21 @@ body {
     background-position: center;
     background-repeat: no-repeat;
 }
-.sans {
-    font-family: 'Montserrat', 'Helvetica Neue', Helvetica, Arial, sans-serif;
-}
-.serif {
-    font-family: 'Trirong', Georgia, Times, 'Times New Roman', Courier, serif;
-}
 svg {
     display: inline-block;
 }
 
 [x-cloak] { display: none !important; }
+
+.arrow-down::after {
+    content: '';
+    position: absolute;
+    left: 50%;
+    bottom: 0;
+    transform: translateX(-50%);
+    width: 0; 
+    height: 0; 
+    border-left: 6px solid transparent;
+    border-right: 6px solid transparent;
+    border-top: 6px solid #065f46;
+}
