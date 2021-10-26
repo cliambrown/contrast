@@ -613,10 +613,6 @@ video {
 	margin-left: auto;
 	margin-right: auto;
 }
-.my-4 {
-	margin-top: 1rem;
-	margin-bottom: 1rem;
-}
 .my-2 {
 	margin-top: 0.5rem;
 	margin-bottom: 0.5rem;
@@ -635,6 +631,12 @@ video {
 .mb-4 {
 	margin-bottom: 1rem;
 }
+.mb-10 {
+	margin-bottom: 2.5rem;
+}
+.mt-4 {
+	margin-top: 1rem;
+}
 .mb-1 {
 	margin-bottom: 0.25rem;
 }
@@ -646,9 +648,6 @@ video {
 }
 .-mr-1 {
 	margin-right: -0.25rem;
-}
-.mt-4 {
-	margin-top: 1rem;
 }
 .mr-1 {
 	margin-right: 0.25rem;
@@ -962,6 +961,10 @@ svg {
 
 	.md\:mt-8 {
 		margin-top: 2rem;
+	}
+
+	.md\:mb-4 {
+		margin-bottom: 1rem;
 	}
 
 	.md\:block {

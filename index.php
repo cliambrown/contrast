@@ -6,13 +6,18 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="icon" href="data:;base64,iVBORw0KGgo=">
     <title>Contrast</title>
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+
+    <meta property="og:url" content="https://cliambrown.com/contrast/" />
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content="Colour Contrast Tool" />
+    <meta property="og:description" content="Check the WCAG 3 contrast between two colors; adjust colors to desired contrast levels; convert between hex, rgb, hsl, and LCh" />
+    <meta property="og:image" content="https://cliambrown.com/og_images/contrast.png" />
+    
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&display=swap" rel="stylesheet">
-    <link href="./dist/contrast.css" rel="stylesheet">
-    <script defer src="./dist/contrast.js?v=0.3"></script>
+    <link href="./dist/contrast.css?v=0.4" rel="stylesheet">
+    <script defer src="./dist/contrast.js?v=0.4"></script>
 </head>
 
 <body class="bg-gray-50">
@@ -25,7 +30,7 @@
             
             <?php foreach (['text','bg'] as $textOrBg) { ?>
                 
-                <div class="flex-grow my-4 text-center md:text-left <?=($textOrBg === 'bg' ? 'md:text-right md:order-3' : 'md:order-1');?>">
+                <div class="flex-grow mb-10 md:mb-4 mt-4 text-center md:text-left <?=($textOrBg === 'bg' ? 'md:text-right md:order-3' : 'md:order-1');?>">
                 
                     <h2 class="font-semibold text-lg mb-1"><?=($textOrBg === 'text' ? 'Text' : 'Background');?></h2>
                     
@@ -98,7 +103,7 @@
                 
             <?php } ?>
             
-            <div class="flex-shrink my-4 text-center max-w-xs mx-auto md:order-2">
+            <div class="flex-shrink mb-10 md:mb-4 mt-4 text-center max-w-xs mx-auto md:order-2">
                         
                 <div class="py-2 mx-auto whitespace-nowrap px-2 max-w-full" :style="{ backgroundColor: modes.hex.bg ? modes.hex.bg : 'transparent' }">
                     <span :style="{ color: modes.hex.text ? modes.hex.text : 'transparent' }">Sample text</span>
